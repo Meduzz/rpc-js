@@ -1,0 +1,19 @@
+{
+  "name": "js-rpc",
+  "version": "0.0.1",
+  "description": "HTTP rpc over nats.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meduzz/js-rpc.git"
+  },
+  "author": "Meduzz",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Meduzz/js-rpc/issues"
+  },
+  "homepage": "https://github.com/Meduzz/js-rpc#readme",
+  "dependencies": {
+    "nats": "^1.0.1"
+  }
+}
