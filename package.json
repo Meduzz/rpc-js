@@ -1,6 +1,6 @@
 {
-  "name": "js-rpc",
-  "version": "0.0.1",
+  "name": "@chimps/js-rpc",
+  "version": "0.0.2",
   "description": "HTTP rpc over nats.",
   "main": "index.js",
   "repository": {

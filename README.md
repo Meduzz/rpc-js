@@ -34,3 +34,18 @@ RawEventers on the other hand will be served the raw event sent to the topic the
 # What's up with the group (in workerGroup, eventerGroup)
 
 Nats offer us to create groups of subscribers, all traffic is split between the subscribers in that group. While ungrouped subscribers will all receive all traffic.
+
+# An example
+
+This example will echo what ever got sent to the topic echo.
+
+```
+const rpc = require('@chimps/js-rpc')
+
+rpc.connect()
+    .worker("echo", (req) => {
+        return {code:200, metadata:{"Content-Type":"text/plain"}, body:req.body}
+    }).eventer("event", (req) => {
+        console.log("There was an event.")
+    }).start()
+```

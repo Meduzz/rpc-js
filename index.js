@@ -73,7 +73,7 @@ class Builder {
 
         this._eventers.forEach(vo => {
             if (vo.group != null) {
-                client.subscribe(vo.queue, vo.group, this.eventerGroup(vo.cb))
+                client.subscribe(vo.queue, vo.group, this._eventerWrapper(vo.cb))
             } else {
                 client.subscribe(vo.queue, this._eventerWrapper(vo.cb))
             }
