@@ -1,6 +1,9 @@
-const rpc = require('../')
+const {Server} = require('../')
 
-rpc.connect()
-    .workerGroup("echo", "example", (req) => {
-        return {code:200, metadata:{"Content-Type":"text/plain"}, body:req.body}
-    }).start()
+const c = Server.connect()
+c.setQueue(true)
+c.registerWorker('echo', msg => {
+    msg.metadata['result'] = 'success'
+    return msg
+})
+c.start("test")

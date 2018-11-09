@@ -1,7 +1,7 @@
 {
   "name": "@chimps/js-rpc",
-  "version": "0.0.2",
-  "description": "HTTP rpc over nats.",
+  "version": "0.0.3",
+  "description": "rpc over X.",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/Meduzz/js-rpc#readme",
   "dependencies": {
-    "nats": "^1.0.1"
+    "nats": "^1.0.1",
+    "npm": "^6.4.1"
   }
 }
