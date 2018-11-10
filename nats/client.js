@@ -2,9 +2,9 @@ const {Client} = require('../model')
 const nats = require('nats')
 
 class NatsClient extends Client {
-    static connect(url, token) {
-        if (token) {
-            return new NatsClient(url, token)
+    static connect(url, username, password) {
+        if (username) {
+            return new NatsServer({url:url, user:username, pass:password})
         } else if (url) {
             return new NatsClient(url)
         } else {
