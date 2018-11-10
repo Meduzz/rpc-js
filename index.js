@@ -1,1 +1,3 @@
-module.exports = require('./nats')
+exports.nats = require('./nats')
+
+exports.model = require('./model.js')

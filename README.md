@@ -27,20 +27,20 @@ The registerWorker function is expecting your callback to return the following j
 Eventers are on the other hand not expected to generate a reply, only to deal with the request. Lets call it normal messaging. The registerEventer, like the worker accepts an Message.
 
 ## Implementations
-Rpc can be done over a number of medias, for now only nats is supported. But there's both a server and a client part.
+Rpc can be done over a number of transports, for now only nats is supported by this package. But there's both a server and a client part.
 
 # An example
 
 This example will echo what ever got sent to the topic echo.
 
 ```
-const {Server} = require('@chimps/js-rpc')
+const {nats, model} = require('../')
 
-const c = Server.connect()
+const c = nats.Server.connect()
 c.setQueue(true)
 c.registerWorker('echo', msg => {
-    msg.metadata['result'] = 'success'
-    return msg
+    let m = model.Message.newSuccess(msg.body)
+    return m
 })
 c.start("test")
 ```

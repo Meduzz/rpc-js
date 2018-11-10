@@ -1,9 +1,9 @@
-const {Server} = require('../')
+const {nats, model} = require('../')
 
-const c = Server.connect()
+const c = nats.Server.connect()
 c.setQueue(true)
 c.registerWorker('echo', msg => {
-    msg.metadata['result'] = 'success'
-    return msg
+    let m = model.Message.newSuccess(msg.body)
+    return m
 })
 c.start("test")
