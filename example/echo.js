@@ -1,4 +1,4 @@
-const {nats, model} = require('../')
+const { nats, model } = require('../')
 
 const c = nats.Server.connect()
 c.setQueue(true)
