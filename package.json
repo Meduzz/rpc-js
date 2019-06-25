@@ -1,7 +1,7 @@
 {
   "name": "@chimps/js-rpc",
-  "version": "0.0.9",
-  "description": "rpc over X.",
+  "version": "0.0.10",
+  "description": "rpc over nats.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -22,5 +22,9 @@
   },
   "devDependencies": {
     "mocha": "~5.2.0"
-  }
+  },
+  "keywords": [
+    "rpc",
+    "nats"
+  ]
 }

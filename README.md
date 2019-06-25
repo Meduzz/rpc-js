@@ -1,10 +1,12 @@
 # rpc-js
 
-The whole plan is to make it easy to do rpc. The base concept is that workers will do rpc style message handling. While eventers will only accepts payloads, but not return anything.
+The whole plan is to make it easy to do rpc. The base concept is to  send and hanlde messages (over nats).
 
-## Workers
+## Handler
 
-This is the base of rpc, these callback handle messages and they expect an answer. Callbacks wired up with the regierWorker should expect messages to have the following structure.
+This replaces both workers and events and combines them both into one simple context. Handlers get registered to a path with an optional group, to make them share the load of that queue.
+
+Messages still looks like this:
 
 ```
 {
@@ -13,22 +15,6 @@ This is the base of rpc, these callback handle messages and they expect an answe
 }
 ```
 
-The registerWorker function is expecting your callback to return the following json.
-
-```
-{
-    metadata:{<headers needed to serve the response>},
-    body:<up to you>
-}
-```
-
-## Eventers
-
-Eventers are on the other hand not expected to generate a reply, only to deal with the request. Lets call it normal messaging. The registerEventer, like the worker accepts an Message.
-
-## Implementations
-Rpc can be done over a number of transports, for now only nats is supported by this package. But there's both a server and a client part.
-
 # An example
 
 This example will echo what ever got sent to the topic echo.
@@ -36,11 +22,28 @@ This example will echo what ever got sent to the topic echo.
 ```
 const {nats, model} = require('../')
 
+// connect to nats
 const c = nats.Server.connect()
-c.setQueue(true)
-c.registerWorker('echo', msg => {
-    let m = model.Message.newSuccess(msg.body)
-    return m
+
+// bind a handler to the echo queue, expecting to be called with request.
+c.handler('echo', null, ctx => {
+    let m = ctx.body()
+    
+    ctx.reply(m)
 })
+
 c.start("test")
+```
+
+To consume the above rpc service:
+
+```
+const {nats, model} = require('../')
+
+// connect to nats
+const c = nats.Server.connect()
+
+// request a response from echo, give it 3000 millis to respond to us.
+let res = await c.request('echo', model.Message.newEmptyStringBody(), 3000)
+// res will now contain a model.Message response.
 ```
