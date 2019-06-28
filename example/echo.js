@@ -1,9 +1,9 @@
 const { nats, model } = require('../')
 
-const c = nats.Server.connect()
-c.setQueue(true)
-c.registerWorker('echo', msg => {
-    let m = model.Message.newSuccess(msg.body)
-    return m
+const rpc = nats.connect()
+rpc.handle('echo', 'myqueuegroup', ctx => {
+    ctx.reply(ctx.body())
 })
-c.start("test")
+rpc.start("test")
+
+const reply = await rpc.request('echo', model.Message.newEmptyStringBody())
